@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useGithubUser, useGithubRepos } from '@/hooks/useGithubData'
 import dynamic from 'next/dynamic'
-import Sidebar from '../../components/Sidebar'
+import Sidebar from '@/components/Sidebar'
 
-const LanguageChart = dynamic(() => import('../../components/LanguageChart'), { ssr: false })
-const StarsChart = dynamic(() => import('../../components/StarsChart'), { ssr: false })
+const LanguageChart = dynamic(() => import('@/components/LanguageChart'), { ssr: false })
+const StarsChart = dynamic(() => import('@/components/StarsChart'), { ssr: false })
 
 export default function Dashboard() {
   const { data: session, status } = useSession()

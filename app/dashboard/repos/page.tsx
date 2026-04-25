@@ -3,8 +3,8 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useGithubRepos, useGithubUser } from '@/hooks/useGithubData'
-import Sidebar from '../../components/Sidebar'
-import Navbar from '../../components/Navbar'
+import Sidebar from '@/components/Sidebar'
+import Navbar from '@/components/Navbar'
 
 export default function ReposPage() {
   const { data: session, status } = useSession()
@@ -24,9 +24,9 @@ export default function ReposPage() {
     if (repo.description) score += 20
     if (repo.language) score += 20
     if (!repo.fork) score += 20
-    const daysSinceUpdate = (Date.now() - new Date(repo.updated_at).getTime()) / (1000 * 60 * 60 * 24)
-    if (daysSinceUpdate < 30) score += 20
-    else if (daysSinceUpdate < 90) score += 10
+    const days = (Date.now() - new Date(repo.updated_at).getTime()) / (1000 * 60 * 60 * 24)
+    if (days < 30) score += 20
+    else if (days < 90) score += 10
     return score
   }
 
@@ -47,7 +47,11 @@ export default function ReposPage() {
       return 0
     })
 
-  if (status === 'loading') return <div className="min-h-screen flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>
+  if (status === 'loading') return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-gray-500">Loading...</p>
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -55,20 +59,17 @@ export default function ReposPage() {
       <div className="flex">
         <Sidebar username={user?.login || ''} />
         <div className="flex-1 p-6">
+
           <div className="mb-6">
             <h1 className="text-2xl font-semibold text-gray-900">Repositories</h1>
             <p className="text-gray-500 text-sm mt-1">{repos?.length || 0} public repositories</p>
           </div>
 
           {/* Filters */}
-          <div className="flex items-center gap-3 mb-6 flex-wrap">
+          <div className="flex items-center gap-3 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-xs text-gray-500">Language:</span>
-              <select
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                className="text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700"
-              >
+              <select value={filter} onChange={(e) => setFilter(e.target.value)} className="text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700">
                 {languages.map((l) => (
                   <option key={l} value={l}>{l === 'all' ? 'All Languages' : l}</option>
                 ))}
@@ -76,11 +77,7 @@ export default function ReposPage() {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-xs text-gray-500">Sort:</span>
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
-                className="text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700"
-              >
+              <select value={sort} onChange={(e) => setSort(e.target.value)} className="text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700">
                 <option value="stars">Most Stars</option>
                 <option value="updated">Recently Updated</option>
                 <option value="name">Name A-Z</option>
@@ -101,11 +98,8 @@ export default function ReposPage() {
                   <div key={repo.id} className="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between hover:border-blue-200 transition">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <a href={repo.html_url} target="_blank" className="text-blue-600 font-medium text-sm hover:underline truncate">
-                          {repo.name}
-                        </a>
+                        <a href={repo.html_url} target="_blank" className="text-blue-600 font-medium text-sm hover:underline truncate">{repo.name}</a>
                         {repo.fork && <span className="text-xs text-gray-400 border border-gray-200 px-1.5 py-0.5 rounded">fork</span>}
-                        {repo.private && <span className="text-xs text-gray-400 border border-gray-200 px-1.5 py-0.5 rounded">private</span>}
                       </div>
                       <p className="text-xs text-gray-400 mb-2 truncate">{repo.description || 'No description'}</p>
                       <div className="flex items-center gap-3 text-xs text-gray-400">
@@ -116,9 +110,7 @@ export default function ReposPage() {
                       </div>
                     </div>
                     <div className="ml-4 flex-shrink-0">
-                      <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${healthClass}`}>
-                        Health {health}
-                      </span>
+                      <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${healthClass}`}>Health {health}</span>
                     </div>
                   </div>
                 )

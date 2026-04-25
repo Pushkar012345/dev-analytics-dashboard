@@ -14,7 +14,7 @@ export default function Sidebar({ username }: { username: string }) {
   const pathname = usePathname()
 
   return (
-    <div className="w-48 bg-white border-r border-gray-200 min-h-screen flex flex-col py-4">
+    <div className="w-48 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 min-h-screen flex flex-col py-4">
       <p className="text-xs font-medium text-gray-400 px-4 mb-2 tracking-wide">MENU</p>
       {navItems.map((item) => (
         <Link
@@ -22,19 +22,19 @@ export default function Sidebar({ username }: { username: string }) {
           href={item.href}
           className={`flex items-center gap-2 px-4 py-2 text-sm ${
             pathname === item.href
-              ? 'bg-blue-50 text-blue-600 font-medium'
-              : 'text-gray-500 hover:bg-gray-50'
+              ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium'
+              : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
           }`}
         >
-          <div className={`w-1.5 h-1.5 rounded-full ${pathname === item.href ? 'bg-blue-600' : 'bg-gray-300'}`}/>
+          <div className={`w-1.5 h-1.5 rounded-full ${pathname === item.href ? 'bg-blue-600 dark:bg-blue-400' : 'bg-gray-300 dark:bg-gray-600'}`}/>
           {item.label}
         </Link>
       ))}
 
-      <div className="mt-auto px-4 pt-4 border-t border-gray-100 mx-4">
+      <div className="mt-auto px-4 pt-4 border-t border-gray-100 dark:border-gray-700 mx-4">
         <p className="text-xs font-medium text-gray-400 mb-1 tracking-wide">ACCOUNT</p>
-        <p className="text-xs text-gray-500">@{username}</p>
-        <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full mt-1 inline-block">● Connected</span>
+        <p className="text-xs text-gray-500 dark:text-gray-400">@{username}</p>
+        <span className="text-xs text-green-600 bg-green-50 dark:bg-green-900/30 px-2 py-0.5 rounded-full mt-1 inline-block">● Connected</span>
       </div>
     </div>
   )
