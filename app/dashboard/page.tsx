@@ -63,41 +63,45 @@ export default function Dashboard() {
       </nav>
 
       {/* Body with Sidebar */}
-      <div className="flex">
+      <div className="flex min-h-0">
         <Sidebar username={user?.login || ''} />
 
-        {/* pb-20 on mobile to clear the bottom nav */}
-        <div className="flex-1 p-3 md:p-6 pb-24 md:pb-6">
+        {/* pb-24 on mobile to clear the bottom nav, min-w-0 prevents flex overflow */}
+        <div className="flex-1 min-w-0 p-3 md:p-6 pb-24 md:pb-6 overflow-x-hidden">
           {/* Profile Header */}
-          <div className="flex items-center gap-3 mb-6">
-            <img src={user?.avatar_url} alt="avatar" className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-blue-100"/>
-            <div>
-              <h1 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white">{user?.name || user?.login}</h1>
-              <p className="text-gray-500 dark:text-gray-400 text-sm">@{user?.login} · {user?.location || 'GitHub Developer'}</p>
+          <div className="flex items-center gap-3 mb-5">
+            <img src={user?.avatar_url} alt="avatar" className="w-11 h-11 md:w-14 md:h-14 rounded-full border-2 border-blue-100 shrink-0"/>
+            <div className="min-w-0">
+              <h1 className="text-lg md:text-2xl font-semibold text-gray-900 dark:text-white truncate">{user?.name || user?.login}</h1>
+              <p className="text-gray-500 dark:text-gray-400 text-xs md:text-sm truncate">@{user?.login} · {user?.location || 'GitHub Developer'}</p>
             </div>
           </div>
 
           {/* Stat Cards — 2 cols on mobile, 4 on desktop */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mb-5">
             {stats.map((stat) => (
-              <div key={stat.label} className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">{stat.label}</p>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white">{stat.value}</p>
+              <div key={stat.label} className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-3 md:p-4">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1 truncate">{stat.label}</p>
+                <p className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white">{stat.value}</p>
               </div>
             ))}
           </div>
 
-          {/* Charts — 1 col on mobile, 2 on desktop */}
+          {/* Charts — stacked on mobile, side-by-side on desktop */}
           {!reposLoading && repos && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <LanguageChart repos={repos} />
-              <StarsChart repos={repos} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-5 w-full">
+              <div className="min-w-0 overflow-hidden">
+                <LanguageChart repos={repos} />
+              </div>
+              <div className="min-w-0 overflow-hidden">
+                <StarsChart repos={repos} />
+              </div>
             </div>
           )}
 
           {/* Top Repos */}
           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-            <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">Top Repositories</h2>
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Top Repositories</h2>
             <div className="divide-y divide-gray-100 dark:divide-gray-800">
               {reposLoading ? (
                 <p className="text-gray-400 text-sm py-4">Loading repos...</p>
@@ -106,16 +110,16 @@ export default function Dashboard() {
                   ?.sort((a: any, b: any) => b.stargazers_count - a.stargazers_count)
                   .slice(0, 5)
                   .map((repo: any) => (
-                    <div key={repo.id} className="py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div key={repo.id} className="py-3 flex flex-col gap-1.5">
                       <div className="min-w-0">
                         <a href={repo.html_url} target="_blank" className="text-blue-600 font-medium text-sm hover:underline truncate block">
                           {repo.name}
                         </a>
                         <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5 truncate">{repo.description || 'No description'}</p>
                       </div>
-                      <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 shrink-0">
+                      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                         {repo.language && (
-                          <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full">{repo.language}</span>
+                          <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full shrink-0">{repo.language}</span>
                         )}
                         <span>★ {repo.stargazers_count}</span>
                         <span>⑂ {repo.forks_count}</span>
