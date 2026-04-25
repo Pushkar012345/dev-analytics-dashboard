@@ -51,20 +51,20 @@ export default function SettingsPage() {
   )
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Navbar session={session} />
-      <div className="flex">
+      <div className="flex min-h-0">
         <Sidebar username={user?.login || ''} />
-        <div className="flex-1 p-6 max-w-2xl">
+        <div className="flex-1 p-3 md:p-6 pb-24 md:pb-6 max-w-2xl">
 
           <div className="mb-6">
-            <h1 className="text-2xl font-semibold text-gray-900">Settings</h1>
-            <p className="text-gray-500 text-sm mt-1">Manage your preferences</p>
+            <h1 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white">Settings</h1>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Manage your preferences</p>
           </div>
 
           {/* Profile Card */}
-          <div className="bg-white border border-gray-200 rounded-xl p-5 mb-4">
-            <h2 className="text-sm font-semibold text-gray-700 mb-4">GitHub Profile</h2>
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5 mb-4">
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">GitHub Profile</h2>
             <div className="flex items-center gap-4">
               <img src={user?.avatar_url} alt="avatar" className="w-14 h-14 rounded-full border-2 border-blue-100" />
               <div>
@@ -79,15 +79,15 @@ export default function SettingsPage() {
           </div>
 
           {/* Stats summary */}
-          <div className="bg-white border border-gray-200 rounded-xl p-5 mb-4">
-            <h2 className="text-sm font-semibold text-gray-700 mb-4">Account Stats</h2>
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5 mb-4">
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">Account Stats</h2>
             <div className="grid grid-cols-3 gap-4">
               {[
                 { label: 'Public Repos', value: user?.public_repos },
                 { label: 'Followers', value: user?.followers },
                 { label: 'Following', value: user?.following },
               ].map((s) => (
-                <div key={s.label} className="text-center p-3 bg-gray-50 rounded-lg">
+                <div key={s.label} className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                   <p className="text-xl font-semibold text-gray-900">{s.value}</p>
                   <p className="text-xs text-gray-400 mt-0.5">{s.label}</p>
                 </div>
@@ -96,8 +96,8 @@ export default function SettingsPage() {
           </div>
 
           {/* Preferences */}
-          <div className="bg-white border border-gray-200 rounded-xl p-5 mb-4">
-            <h2 className="text-sm font-semibold text-gray-700 mb-4">Preferences</h2>
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5 mb-4">
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">Preferences</h2>
             <div className="space-y-4">
               <div>
                 <label className="text-sm text-gray-600 block mb-1.5">Default Landing Page</label>
@@ -128,7 +128,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Danger zone */}
-          <div className="bg-white border border-red-100 rounded-xl p-5">
+          <div className="bg-white dark:bg-gray-900 border border-red-100 dark:border-red-900/30 rounded-xl p-5">
             <h2 className="text-sm font-semibold text-red-600 mb-2">Account</h2>
             <p className="text-xs text-gray-400 mb-4">Sign out of your GitHub account from DevDash.</p>
             <button

@@ -49,22 +49,22 @@ export default function LanguagesPage() {
   const COLORS = ['#3b82f6', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#06b6d4', '#f97316', '#ec4899']
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Navbar session={session} />
-      <div className="flex">
+      <div className="flex min-h-0">
         <Sidebar username={user?.login || ''} />
-        <div className="flex-1 p-6">
+        <div className="flex-1 min-w-0 p-3 md:p-6 pb-24 md:pb-6">
 
           <div className="mb-6">
-            <h1 className="text-2xl font-semibold text-gray-900">Languages</h1>
-            <p className="text-gray-500 text-sm mt-1">{langList.length} languages across your repos</p>
+            <h1 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white">Languages</h1>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{langList.length} languages across your repos</p>
           </div>
 
           {/* Charts row */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <LanguageChart repos={repos || []} />
-            <div className="bg-white border border-gray-200 rounded-xl p-4">
-              <h2 className="text-sm font-semibold text-gray-700 mb-4">Repos per Language</h2>
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+              <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">Repos per Language</h2>
               <div className="space-y-3">
                 {langList.slice(0, 6).map((lang, i) => (
                   <div key={lang.name}>
@@ -75,7 +75,7 @@ export default function LanguagesPage() {
                       </div>
                       <span className="text-xs text-gray-400">{lang.count} repos · {lang.percent}%</span>
                     </div>
-                    <div className="w-full bg-gray-100 rounded-full h-1.5">
+                    <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
                       <div
                         className="h-1.5 rounded-full transition-all"
                         style={{ width: `${lang.percent}%`, background: COLORS[i % COLORS.length] }}
@@ -88,9 +88,9 @@ export default function LanguagesPage() {
           </div>
 
           {/* Language cards */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {langList.map((lang, i) => (
-              <div key={lang.name} className="bg-white border border-gray-200 rounded-xl p-4 hover:border-blue-200 transition">
+              <div key={lang.name} className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4 hover:border-blue-200 transition">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-3 h-3 rounded-full" style={{ background: COLORS[i % COLORS.length] }} />
                   <span className="font-medium text-gray-900 text-sm">{lang.name}</span>

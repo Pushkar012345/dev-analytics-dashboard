@@ -1,6 +1,5 @@
 'use client'
 import { signOut } from 'next-auth/react'
-import ThemeToggle from './ThemeToggle'
 
 export default function Navbar({ session }: { session: any }) {
   return (
@@ -13,10 +12,10 @@ export default function Navbar({ session }: { session: any }) {
         </div>
         <span className="font-semibold text-gray-900 dark:text-white">DevDash</span>
       </div>
-      <div className="flex items-center gap-3">
-        <ThemeToggle />
+      <div className="flex items-center gap-2 sm:gap-3">
+        
         <img src={session?.user?.image || ''} alt="avatar" className="w-8 h-8 rounded-full" />
-        <span className="text-sm text-gray-600 dark:text-gray-300">{session?.user?.name}</span>
+        <span className="hidden sm:inline text-sm text-gray-600 dark:text-gray-300">{session?.user?.name}</span>
         <button
           onClick={() => signOut()}
           className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-md"

@@ -54,30 +54,30 @@ export default function ReposPage() {
   )
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Navbar session={session} />
-      <div className="flex">
+      <div className="flex min-h-0">
         <Sidebar username={user?.login || ''} />
-        <div className="flex-1 p-6">
+        <div className="flex-1 min-w-0 p-3 md:p-6 pb-24 md:pb-6">
 
           <div className="mb-6">
-            <h1 className="text-2xl font-semibold text-gray-900">Repositories</h1>
-            <p className="text-gray-500 text-sm mt-1">{repos?.length || 0} public repositories</p>
+            <h1 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white">Repositories</h1>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{repos?.length || 0} public repositories</p>
           </div>
 
-          {/* Filters */}
-          <div className="flex items-center gap-3 mb-6">
+          {/* Filters — wrap on mobile */}
+          <div className="flex flex-wrap items-center gap-3 mb-6">
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-500">Language:</span>
-              <select value={filter} onChange={(e) => setFilter(e.target.value)} className="text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700">
+              <span className="text-xs text-gray-500 dark:text-gray-400">Language:</span>
+              <select value={filter} onChange={(e) => setFilter(e.target.value)} className="text-sm border border-gray-200 dark:border-gray-700 rounded-lg px-2 py-1 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200">
                 {languages.map((l) => (
                   <option key={l} value={l}>{l === 'all' ? 'All Languages' : l}</option>
                 ))}
               </select>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-500">Sort:</span>
-              <select value={sort} onChange={(e) => setSort(e.target.value)} className="text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700">
+              <span className="text-xs text-gray-500 dark:text-gray-400">Sort:</span>
+              <select value={sort} onChange={(e) => setSort(e.target.value)} className="text-sm border border-gray-200 dark:border-gray-700 rounded-lg px-2 py-1 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200">
                 <option value="stars">Most Stars</option>
                 <option value="updated">Recently Updated</option>
                 <option value="name">Name A-Z</option>
@@ -95,21 +95,21 @@ export default function ReposPage() {
                 const healthClass = getHealthColor(health)
                 const updatedDays = Math.floor((Date.now() - new Date(repo.updated_at).getTime()) / (1000 * 60 * 60 * 24))
                 return (
-                  <div key={repo.id} className="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between hover:border-blue-200 transition">
+                  <div key={repo.id} className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:border-blue-200 dark:hover:border-blue-700 transition">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <a href={repo.html_url} target="_blank" className="text-blue-600 font-medium text-sm hover:underline truncate">{repo.name}</a>
-                        {repo.fork && <span className="text-xs text-gray-400 border border-gray-200 px-1.5 py-0.5 rounded">fork</span>}
+                        {repo.fork && <span className="text-xs text-gray-400 border border-gray-200 dark:border-gray-700 px-1.5 py-0.5 rounded shrink-0">fork</span>}
                       </div>
-                      <p className="text-xs text-gray-400 mb-2 truncate">{repo.description || 'No description'}</p>
-                      <div className="flex items-center gap-3 text-xs text-gray-400">
+                      <p className="text-xs text-gray-400 dark:text-gray-500 mb-2 truncate">{repo.description || 'No description'}</p>
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-gray-400 dark:text-gray-500">
                         {repo.language && <span className="text-blue-500">{repo.language}</span>}
                         <span>★ {repo.stargazers_count}</span>
                         <span>⑂ {repo.forks_count}</span>
                         <span>Updated {updatedDays === 0 ? 'today' : `${updatedDays}d ago`}</span>
                       </div>
                     </div>
-                    <div className="ml-4 flex-shrink-0">
+                    <div className="shrink-0">
                       <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${healthClass}`}>Health {health}</span>
                     </div>
                   </div>
