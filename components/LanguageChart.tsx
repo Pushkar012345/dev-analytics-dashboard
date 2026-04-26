@@ -40,7 +40,7 @@ function LanguageChart({ repos }: { repos: any[] }) {
             outerRadius={isMobile ? 70 : 80}
             dataKey="value"
             // No inline labels on mobile — they clip
-            label={isMobile ? undefined : ({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+            label={isMobile ? undefined : ({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
             labelLine={!isMobile}
           >
             {data.map((_, index) => (
