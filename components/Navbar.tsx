@@ -2,6 +2,8 @@
 import { signOut } from 'next-auth/react'
 
 export default function Navbar({ session }: { session: any }) {
+  const avatarUrl = session?.user?.image || null
+
   return (
     <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-6 py-3 flex items-center justify-between">
       <div className="flex items-center gap-2">
@@ -13,8 +15,13 @@ export default function Navbar({ session }: { session: any }) {
         <span className="font-semibold text-gray-900 dark:text-white">DevDash</span>
       </div>
       <div className="flex items-center gap-2 sm:gap-3">
-        
-        <img src={session?.user?.image || ''} alt="avatar" className="w-8 h-8 rounded-full" />
+        {avatarUrl ? (
+          <img src={avatarUrl} alt="avatar" className="w-8 h-8 rounded-full" />
+        ) : (
+          <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-xs font-medium text-blue-600 dark:text-blue-400">
+            {session?.user?.name?.[0]?.toUpperCase() ?? '?'}
+          </div>
+        )}
         <span className="hidden sm:inline text-sm text-gray-600 dark:text-gray-300">{session?.user?.name}</span>
         <button
           onClick={() => signOut()}

@@ -66,7 +66,10 @@ export default function SettingsPage() {
           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5 mb-4">
             <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">GitHub Profile</h2>
             <div className="flex items-center gap-4">
-              <img src={user?.avatar_url} alt="avatar" className="w-14 h-14 rounded-full border-2 border-blue-100" />
+              {user?.avatar_url
+                ? <img src={user.avatar_url} alt="avatar" className="w-14 h-14 rounded-full border-2 border-blue-100" />
+                : <div className="w-14 h-14 rounded-full border-2 border-blue-100 bg-blue-50 dark:bg-blue-900 flex items-center justify-center text-lg font-medium text-blue-600 dark:text-blue-400">{user?.login?.[0]?.toUpperCase() ?? '?'}</div>
+              }
               <div>
                 <p className="font-medium text-gray-900">{user?.name || user?.login}</p>
                 <p className="text-sm text-gray-500">@{user?.login}</p>

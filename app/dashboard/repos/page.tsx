@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react'
 import { useGithubRepos, useGithubUser } from '@/hooks/useGithubData'
 import Sidebar from '@/components/Sidebar'
 import Navbar from '@/components/Navbar'
+import ErrorBanner from '@/components/ErrorBanner'
 
 export default function ReposPage() {
   const { data: session, status } = useSession()
   const { data: user } = useGithubUser()
-  const { data: repos, isLoading } = useGithubRepos()
+  const { data: repos, isLoading, isError, error, refetch } = useGithubRepos()
   const router = useRouter()
   const [filter, setFilter] = useState('all')
   const [sort, setSort] = useState('stars')
@@ -84,6 +85,8 @@ export default function ReposPage() {
               </select>
             </div>
           </div>
+
+          <ErrorBanner error={isError ? error! : null} onRetry={refetch} />
 
           {/* Repo Cards */}
           {isLoading ? (

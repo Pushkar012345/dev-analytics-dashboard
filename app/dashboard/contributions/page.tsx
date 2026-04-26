@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useGithubUser, useGithubRepos, useGithubEvents } from '@/hooks/useGithubData'
 import Sidebar from '@/components/Sidebar'
 import Navbar from '@/components/Navbar'
+import ErrorBanner from '@/components/ErrorBanner'
 import dynamic from 'next/dynamic'
 
 const CommitChart = dynamic(() => import('@/components/CommitChart'), { ssr: false })
@@ -13,7 +14,7 @@ export default function ContributionsPage() {
   const { data: session, status } = useSession()
   const { data: user } = useGithubUser()
   const { data: repos } = useGithubRepos()
-  const { data: events, isLoading: eventsLoading } = useGithubEvents()
+  const { data: events, isLoading: eventsLoading, isError: eventsError, error: eventsErr, refetch: refetchEvents } = useGithubEvents()
   const router = useRouter()
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function ContributionsPage() {
   }).length || 0
 
   const stats = [
-    { label: 'Total Pushes (90d)', value: eventsLoading ? '...' : events?.totalCommits ?? 0 },
+    { label: 'Contributions (1yr)', value: eventsLoading ? '...' : events?.totalContributions ?? 0 },
     { label: 'Current Streak', value: eventsLoading ? '...' : `${events?.streak ?? 0}d` },
     { label: 'Repos Active (30d)', value: recentRepos },
     { label: 'Public Gists', value: user?.public_gists || 0 },
@@ -52,9 +53,11 @@ export default function ContributionsPage() {
           <div className="mb-6">
             <h1 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white">Contributions</h1>
             <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-              Real commit activity from GitHub Events API
+              Contribution data from GitHub GraphQL API — matches your profile page
             </p>
           </div>
+
+          <ErrorBanner error={eventsError ? eventsErr! : null} onRetry={refetchEvents} />
 
           {/* Stat Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
@@ -71,7 +74,7 @@ export default function ContributionsPage() {
           {/* Commit Chart */}
           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4 mb-6 overflow-hidden">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-200">Push Activity — Last 6 Months</h2>
+              <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-200">Contribution Activity — Last 6 Months</h2>
               {eventsLoading && (
                 <span className="text-xs text-gray-400 animate-pulse">Fetching events...</span>
               )}

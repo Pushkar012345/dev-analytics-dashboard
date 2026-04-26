@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useGithubUser, useGithubRepos } from '@/hooks/useGithubData'
 import Sidebar from '@/components/Sidebar'
 import Navbar from '@/components/Navbar'
+import ErrorBanner from '@/components/ErrorBanner'
 import dynamic from 'next/dynamic'
 
 const LanguageChart = dynamic(() => import('@/components/LanguageChart'), { ssr: false })
@@ -13,7 +14,7 @@ const StarsChart = dynamic(() => import('@/components/StarsChart'), { ssr: false
 export default function LanguagesPage() {
   const { data: session, status } = useSession()
   const { data: user } = useGithubUser()
-  const { data: repos } = useGithubRepos()
+  const { data: repos, isError: reposError, error: reposErr, refetch: refetchRepos } = useGithubRepos()
   const router = useRouter()
 
   useEffect(() => {
@@ -59,6 +60,8 @@ export default function LanguagesPage() {
             <h1 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white">Languages</h1>
             <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{langList.length} languages across your repos</p>
           </div>
+
+          <ErrorBanner error={reposError ? reposErr! : null} onRetry={refetchRepos} />
 
           {/* Charts row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

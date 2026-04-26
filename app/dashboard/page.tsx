@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useGithubUser, useGithubRepos } from '@/hooks/useGithubData'
 import dynamic from 'next/dynamic'
 import Sidebar from '@/components/Sidebar'
+import ErrorBanner from '@/components/ErrorBanner'
 
 const LanguageChart = dynamic(() => import('@/components/LanguageChart'), { ssr: false })
 const StarsChart = dynamic(() => import('@/components/StarsChart'), { ssr: false })
@@ -12,8 +13,8 @@ const StarsChart = dynamic(() => import('@/components/StarsChart'), { ssr: false
 export default function Dashboard() {
   const { data: session, status } = useSession()
   const router = useRouter()
-  const { data: user, isLoading: userLoading } = useGithubUser()
-  const { data: repos, isLoading: reposLoading } = useGithubRepos()
+  const { data: user, isLoading: userLoading, isError: userError, error: userErr } = useGithubUser()
+  const { data: repos, isLoading: reposLoading, isError: reposError, error: reposErr, refetch: refetchRepos } = useGithubRepos()
 
   useEffect(() => {
     if (status === 'unauthenticated') router.push('/')
@@ -50,7 +51,10 @@ export default function Dashboard() {
           <span className="font-semibold text-gray-900 dark:text-white">DevDash</span>
         </div>
         <div className="flex items-center gap-2 sm:gap-3">
-          <img src={session?.user?.image || ''} alt="avatar" className="w-8 h-8 rounded-full" />
+          {session?.user?.image
+            ? <img src={session.user.image} alt="avatar" className="w-8 h-8 rounded-full" />
+            : <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-xs font-medium text-blue-600 dark:text-blue-400">{session?.user?.name?.[0]?.toUpperCase() ?? '?'}</div>
+          }
           <span className="hidden sm:inline text-sm text-gray-600 dark:text-gray-300">{session?.user?.name}</span>
           <button
             onClick={() => signOut()}
@@ -70,12 +74,17 @@ export default function Dashboard() {
         <div className="flex-1 min-w-0 p-3 md:p-6 pb-24 md:pb-6 overflow-x-hidden">
           {/* Profile Header */}
           <div className="flex items-center gap-3 mb-5">
-            <img src={user?.avatar_url} alt="avatar" className="w-11 h-11 md:w-14 md:h-14 rounded-full border-2 border-blue-100 shrink-0"/>
+            {user?.avatar_url
+              ? <img src={user.avatar_url} alt="avatar" className="w-11 h-11 md:w-14 md:h-14 rounded-full border-2 border-blue-100 shrink-0"/>
+              : <div className="w-11 h-11 md:w-14 md:h-14 rounded-full border-2 border-blue-100 bg-blue-50 dark:bg-blue-900 flex items-center justify-center text-sm font-medium text-blue-600 dark:text-blue-400 shrink-0">{user?.login?.[0]?.toUpperCase() ?? '?'}</div>
+            }
             <div className="min-w-0">
               <h1 className="text-lg md:text-2xl font-semibold text-gray-900 dark:text-white truncate">{user?.name || user?.login}</h1>
               <p className="text-gray-500 dark:text-gray-400 text-xs md:text-sm truncate">@{user?.login} · {user?.location || 'GitHub Developer'}</p>
             </div>
           </div>
+
+          <ErrorBanner error={userError ? userErr! : reposError ? reposErr! : null} onRetry={refetchRepos} />
 
           {/* Stat Cards — 2 cols on mobile, 4 on desktop */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mb-5">
