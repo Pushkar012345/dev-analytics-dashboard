@@ -47,7 +47,7 @@ function LanguageChart({ repos }: { repos: any[] }) {
               <Cell key={index} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip formatter={(value: number) => [`${value} repos`, 'Count']} />
+          <Tooltip formatter={(value) => [`${value} repos`, 'Count']} />git 
         </PieChart>
       </ResponsiveContainer>
 
