@@ -71,7 +71,7 @@ export default function SettingsPage() {
               <div>
                 <p className="font-medium text-gray-900">{user?.name || user?.login}</p>
                 <p className="text-sm text-gray-500">@{user?.login}</p>
-                <p className="text-xs text-gray-400 mt-0.5">{user?.location || 'No location set'} · Joined {new Date(user?.created_at).getFullYear()}</p>
+                <p className="text-xs text-gray-400 mt-0.5">{user?.location || 'No location set'} · Joined {user?.created_at ? new Date(user.created_at).getFullYear() : '—'}</p>
               </div>
               <div className="ml-auto">
                 <span className="text-xs bg-green-50 text-green-600 px-3 py-1 rounded-full font-medium">● Connected</span>
