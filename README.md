@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevDash — GitHub Analytics Dashboard
 
-## Getting Started
+A personal developer analytics dashboard that visualizes your GitHub activity — repositories, contributions, languages, and commit streaks — all in one place.
 
-First, run the development server:
+**Live Demo:** [dev-analytics-dashboard-olive.vercel.app](https://dev-analytics-dashboard-olive.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat-square&logo=tailwindcss)
+![Supabase](https://img.shields.io/badge/Supabase-green?style=flat-square&logo=supabase)
+![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=flat-square&logo=vercel)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **GitHub OAuth login** — sign in securely with your GitHub account
+- **Overview dashboard** — follower count, public repos, push streak, and recent activity feed
+- **Contributions page** — monthly push chart (last 6 months) and day-of-week breakdown
+- **Repositories page** — browse and sort repos by stars, forks, or last updated with a health score indicator
+- **Languages page** — pie chart of top programming languages across all repos
+- **Settings page** — set your default landing page, view profile info, and sign out
+- **Dark mode** — full light/dark theme support
+- **Responsive** — works seamlessly on mobile and desktop
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 4 |
+| Auth | NextAuth.js v4 (GitHub OAuth) |
+| Database | Supabase (user preferences) |
+| Data Fetching | TanStack React Query v5 |
+| Charts | Recharts 3 |
+| Animations | Framer Motion |
+| Deployment | Vercel |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Pushkar Pawar** — Full Stack Developer, Pune, India
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- GitHub: [@Pushkar012345](https://github.com/Pushkar012345)
+- LinkedIn: [pushkarpawar314](https://www.linkedin.com/in/pushkarpawar314/)
+- Portfolio: [pushkar012345.github.io](https://pushkar012345.github.io/)
+- Email: pushkarpawaroff@gmail.com
+
+---
+
+*Built with passion. All rights reserved © 2026 Pushkar Pawar.*
